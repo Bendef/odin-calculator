@@ -73,16 +73,13 @@ function setUpDigitButtons() {
       if (!operator) {
         if (calculationProcessed) {
           calculationProcessed = false;
-          // display.classList.remove("error-message");
           num1 = e.target.textContent;
         } else {
           num1 += e.target.textContent;
         }
-        // display.textContent = num1;
         displayOnScreen(num1);
       } else {
         num2 += e.target.textContent;
-        // display.textContent = num2;
         displayOnScreen(num2);
       }
     });
@@ -100,11 +97,9 @@ function setUpOperatorButtons() {
       } else {
         const result = calculateCurrentOperation();
         if (result === null) {
-          return null;
+          return;
         }
-
         operator = e.target.textContent;
-        // display.textContent = Math.round((+num1 + Number.EPSILON) * 100) / 100;
         displayResult(result);
       }
     });
@@ -123,7 +118,6 @@ function setUpEqualsButton() {
     if (result === null) {
       return;
     }
-    //display.textContent = Math.round((result + Number.EPSILON) * 100) / 100;
     displayResult(result);
     operator = "";
     calculationProcessed = true;
@@ -161,3 +155,34 @@ function displayResult(value) {
   const roundedValue = Math.round((value + Number.EPSILON) * 100) / 100;
   displayOnScreen(roundedValue);
 }
+
+const decimalBtn = document.querySelector(".decimal");
+
+function setUpDecimalButton() {
+  decimalBtn.addEventListener("click", (e) => {
+    if (!operator) {
+      if (calculationProcessed) {
+        calculationProcessed = false;
+        num1 = "";
+      }
+      if (num1.includes(".")) {
+        return;
+      }
+      if (!num1) {
+        num1 += "0";
+      }
+      num1 += e.target.textContent;
+      displayOnScreen(num1);
+    } else {
+      if (num2.includes(".")) {
+        return;
+      }
+      if (!num2) {
+        num2 += "0";
+      }
+      num2 += e.target.textContent;
+      displayOnScreen(num2);
+    }
+  });
+}
+setUpDecimalButton();
