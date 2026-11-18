@@ -93,6 +93,7 @@ function calculateCurrentOperation() {
 function displayOnScreen(value) {
   display.classList.remove("error-message");
   display.textContent = value;
+  fitDisplayText();
 }
 
 function displayResult(value) {
@@ -248,3 +249,14 @@ function setUpKeyboard() {
   });
 }
 setUpKeyboard();
+
+const MIN_FONT_SIZE = 20;
+
+function fitDisplayText() {
+  display.style.fontSize = "";
+  let size = parseFloat(getComputedStyle(display).fontSize);
+  while (display.scrollWidth > display.clientWidth && size > MIN_FONT_SIZE) {
+    size -= 2;
+    display.style.fontSize = `${size}px`;
+  }
+}
