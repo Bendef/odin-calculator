@@ -15,6 +15,7 @@ html {
 
 body {
     font-family: "Google Sans Flex", sans-serif;
+    background-color: hsl(190, 23%, 95%);
 }
 
 #calculator {
@@ -70,7 +71,7 @@ body {
 }
 
 button {
-    border-radius: 999px;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
     font-family: inherit;

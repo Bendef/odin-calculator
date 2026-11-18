@@ -186,3 +186,28 @@ function setUpDecimalButton() {
   });
 }
 setUpDecimalButton();
+
+const backspaceBtn = document.querySelector(".backspace");
+
+function setUpBackspaceButton() {
+  backspaceBtn.addEventListener("click", () => {
+    if (calculationProcessed) {
+      return;
+    }
+    if (operator) {
+      if (!num2) {
+        return;
+      }
+
+      num2 = num2.slice(0, -1);
+      displayOnScreen(num2);
+      return;
+    }
+    if (!num1) {
+      return;
+    }
+    num1 = num1.slice(0, -1);
+    displayOnScreen(num1);
+  });
+}
+setUpBackspaceButton();
