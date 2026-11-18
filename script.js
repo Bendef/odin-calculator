@@ -64,67 +64,11 @@ function setUpACButton() {
     if (e.key === "Escape") resetCalculator();
   });
 }
+setUpACButton();
 
 const digitButtons = document.querySelectorAll(".digit");
-
-// function setUpDigitButtons() {
-//   digitButtons.forEach((digitButton) => {
-//     digitButton.addEventListener("click", (e) => {
-//       if (!operator) {
-//         if (calculationProcessed) {
-//           calculationProcessed = false;
-//           num1 = e.target.textContent;
-//         } else {
-//           num1 += e.target.textContent;
-//         }
-//         displayOnScreen(num1);
-//       } else {
-//         num2 += e.target.textContent;
-//         displayOnScreen(num2);
-//       }
-//     });
-//   });
-// }
-// setUpDigitButtons();
-
 const operatorButtons = document.querySelectorAll(".operator");
-//
-// function setUpOperatorButtons() {
-//   operatorButtons.forEach((operatorButton) => {
-//     operatorButton.addEventListener("click", (e) => {
-//       if (!num2) {
-//         operator = e.target.textContent;
-//       } else {
-//         const result = calculateCurrentOperation();
-//         if (result === null) {
-//           return;
-//         }
-//         operator = e.target.textContent;
-//         displayResult(result);
-//       }
-//     });
-//   });
-// }
-// setUpOperatorButtons();
-//
 const equalsButton = document.querySelector(".equals");
-
-// function setUpEqualsButton() {
-//   equalsButton.addEventListener("click", () => {
-//     if (!num2) {
-//       return;
-//     }
-//     const result = calculateCurrentOperation();
-//     if (result === null) {
-//       return;
-//     }
-//     displayResult(result);
-//     operator = "";
-//     calculationProcessed = true;
-//   });
-// }
-// setUpEqualsButton();
-setUpACButton();
 
 function calculateCurrentOperation() {
   const result = operate(operator, +num1, +num2);
@@ -157,61 +101,7 @@ function displayResult(value) {
 }
 
 const decimalBtn = document.querySelector(".decimal");
-
-// function setUpDecimalButton() {
-//   decimalBtn.addEventListener("click", (e) => {
-//     if (!operator) {
-//       if (calculationProcessed) {
-//         calculationProcessed = false;
-//         num1 = "";
-//       }
-//       if (num1.includes(".")) {
-//         return;
-//       }
-//       if (!num1) {
-//         num1 += "0";
-//       }
-//       num1 += e.target.textContent;
-//       displayOnScreen(num1);
-//     } else {
-//       if (num2.includes(".")) {
-//         return;
-//       }
-//       if (!num2) {
-//         num2 += "0";
-//       }
-//       num2 += e.target.textContent;
-//       displayOnScreen(num2);
-//     }
-//   });
-// }
-// setUpDecimalButton();
-//
 const backspaceBtn = document.querySelector(".backspace");
-
-// function setUpBackspaceButton() {
-//   backspaceBtn.addEventListener("click", () => {
-//     if (operator) {
-//       if (!num2) {
-//         return;
-//       }
-//
-//       num2 = num2.slice(0, -1);
-//       displayOnScreen(num2);
-//       return;
-//     }
-//     if (calculationProcessed) {
-//       return;
-//     }
-//
-//     if (!num1) {
-//       return;
-//     }
-//     num1 = num1.slice(0, -1);
-//     displayOnScreen(num1);
-//   });
-// }
-// setUpBackspaceButton();
 
 function useDigits(digit) {
   if (!operator) {
