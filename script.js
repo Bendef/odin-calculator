@@ -60,9 +60,9 @@ function resetCalculator() {
 function setUpACButton() {
   clearBtn.addEventListener("click", resetCalculator);
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") resetCalculator();
-  });
+  // document.addEventListener("keydown", (e) => {
+  //   if (e.key === "Escape") resetCalculator();
+  // });
 }
 setUpACButton();
 
@@ -222,12 +222,29 @@ function getBackspace() {
 }
 getBackspace();
 
-function useKeyboardDigits() {
-  const allowedDigits = "0123456789";
+function setUpKeyboard() {
+  const allowedDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const allowedOperators = ["+", "-", "*", "/"];
   document.addEventListener("keydown", (e) => {
+    if (e.metaKey || e.ctrlKey) {
+      return;
+    }
     if (allowedDigits.includes(e.key)) {
       useDigits(e.key);
+    } else if (allowedOperators.includes(e.key)) {
+      useOperator(e.key);
+    } else if (e.key === "Escape") {
+      resetCalculator();
+    } else if (e.key === "Backspace") {
+      useBackspace();
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      useEquals();
+    } else if (e.key === "=") {
+      useEquals();
+    } else if (e.key === "," || e.key === ".") {
+      useDecimal();
     }
   });
 }
-useKeyboardDigits();
+setUpKeyboard();
