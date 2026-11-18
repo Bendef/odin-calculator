@@ -13,6 +13,9 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+  if (num2 === 0) {
+    return null;
+  }
   return num1 / num2;
 }
 
@@ -46,6 +49,8 @@ const clearBtn = document.querySelector(".clear");
 
 function resetCalculator() {
   display.textContent = "";
+  display.classList.remove("error-message");
+
   num1 = "";
   num2 = "";
   operator = "";
@@ -54,6 +59,10 @@ function resetCalculator() {
 
 function setUpACButton() {
   clearBtn.addEventListener("click", resetCalculator);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") resetCalculator();
+  });
 }
 
 const digitButtons = document.querySelectorAll(".digit");
@@ -61,18 +70,20 @@ const digitButtons = document.querySelectorAll(".digit");
 function setUpDigitButtons() {
   digitButtons.forEach((digitButton) => {
     digitButton.addEventListener("click", (e) => {
-      console.log({ num1, operator, num2 });
       if (!operator) {
         if (calculationProcessed) {
           calculationProcessed = false;
+          // display.classList.remove("error-message");
           num1 = e.target.textContent;
         } else {
           num1 += e.target.textContent;
         }
-        display.textContent = num1;
+        // display.textContent = num1;
+        displayOnScreen(num1);
       } else {
         num2 += e.target.textContent;
-        display.textContent = num2;
+        // display.textContent = num2;
+        displayOnScreen(num2);
       }
     });
   });
@@ -84,14 +95,17 @@ const operatorButtons = document.querySelectorAll(".operator");
 function setUpOperatorButtons() {
   operatorButtons.forEach((operatorButton) => {
     operatorButton.addEventListener("click", (e) => {
-      console.log({ num1, operator, num2 });
       if (!num2) {
         operator = e.target.textContent;
       } else {
-        num1 = String(operate(operator, +num1, +num2));
-        num2 = "";
+        const result = calculateCurrentOperation();
+        if (result === null) {
+          return null;
+        }
+
         operator = e.target.textContent;
-        display.textContent = num1;
+        // display.textContent = Math.round((+num1 + Number.EPSILON) * 100) / 100;
+        displayResult(result);
       }
     });
   });
@@ -102,14 +116,15 @@ const equalsButton = document.querySelector(".equals");
 
 function setUpEqualsButton() {
   equalsButton.addEventListener("click", () => {
-    console.log({ num1, operator, num2 });
     if (!num2) {
       return;
     }
-    let result = operate(operator, +num1, +num2);
-    display.textContent = Math.round((result + Number.EPSILON) * 100) / 100;
-    num1 = String(result);
-    num2 = "";
+    const result = calculateCurrentOperation();
+    if (result === null) {
+      return;
+    }
+    //display.textContent = Math.round((result + Number.EPSILON) * 100) / 100;
+    displayResult(result);
     operator = "";
     calculationProcessed = true;
   });
@@ -117,4 +132,32 @@ function setUpEqualsButton() {
 setUpEqualsButton();
 setUpACButton();
 
-function evaluate() {}
+function calculateCurrentOperation() {
+  const result = operate(operator, +num1, +num2);
+
+  if (result === null) {
+    display.textContent = "Div by zero impossible";
+    display.classList.add("error-message");
+    num1 = "";
+    num2 = "";
+    operator = "";
+    calculationProcessed = true;
+
+    return null;
+  }
+
+  num1 = String(result);
+  num2 = "";
+
+  return result;
+}
+
+function displayOnScreen(value) {
+  display.classList.remove("error-message");
+  display.textContent = value;
+}
+
+function displayResult(value) {
+  const roundedValue = Math.round((value + Number.EPSILON) * 100) / 100;
+  displayOnScreen(roundedValue);
+}

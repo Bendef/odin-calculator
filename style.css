@@ -1,9 +1,9 @@
 :root {
-    --bg: #0a0f10;
-    --clear: #7babb8;
-    --digit: #1e272a;
-    --equals: #d7e6ff;
-    --operator: #8fa8af;
+    --bg: hsl(190, 23%, 5%);
+    --clear: hsl(193, 30%, 60%);
+    --digit: hsl(195, 17%, 14%);
+    --equals: hsl(218, 100%, 92%);
+    --operator: hsl(193, 17%, 62%);
 }
 
 html {
@@ -77,6 +77,49 @@ button {
     font-size: 30px;
 }
 
-button:hover {
-    opacity: 70%;
+/* button:hover {
+  opacity: 70%;
+} */
+
+.clear:hover,
+.backspace:hover {
+    background-color: hsl(193, 30%, 70%);
+}
+
+.clear:active,
+.backspace:active {
+    background-color: hsl(193, 30%, 80%);
+}
+
+.digit:hover,
+.decimal:hover {
+    background-color: hsl(195, 17%, 24%);
+}
+
+.digit:active,
+.decimal:active {
+    background-color: hsl(195, 17%, 34%);
+}
+
+.operator:hover {
+    background-color: hsl(193, 17%, 72%);
+}
+
+.operator:active {
+    background-color: hsl(193, 17%, 82%);
+}
+
+.equals:hover {
+    background-color: hsl(218, 100%, 93%);
+}
+
+.equals:active {
+    background-color: hsl(218, 100%, 94%);
+}
+
+#display.error-message {
+    color: red;
+    font-size: 24px;
+    justify-content: center;
+    text-align: center;
 }
