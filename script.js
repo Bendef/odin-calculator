@@ -67,63 +67,63 @@ function setUpACButton() {
 
 const digitButtons = document.querySelectorAll(".digit");
 
-function setUpDigitButtons() {
-  digitButtons.forEach((digitButton) => {
-    digitButton.addEventListener("click", (e) => {
-      if (!operator) {
-        if (calculationProcessed) {
-          calculationProcessed = false;
-          num1 = e.target.textContent;
-        } else {
-          num1 += e.target.textContent;
-        }
-        displayOnScreen(num1);
-      } else {
-        num2 += e.target.textContent;
-        displayOnScreen(num2);
-      }
-    });
-  });
-}
-setUpDigitButtons();
+// function setUpDigitButtons() {
+//   digitButtons.forEach((digitButton) => {
+//     digitButton.addEventListener("click", (e) => {
+//       if (!operator) {
+//         if (calculationProcessed) {
+//           calculationProcessed = false;
+//           num1 = e.target.textContent;
+//         } else {
+//           num1 += e.target.textContent;
+//         }
+//         displayOnScreen(num1);
+//       } else {
+//         num2 += e.target.textContent;
+//         displayOnScreen(num2);
+//       }
+//     });
+//   });
+// }
+// setUpDigitButtons();
 
 const operatorButtons = document.querySelectorAll(".operator");
-
-function setUpOperatorButtons() {
-  operatorButtons.forEach((operatorButton) => {
-    operatorButton.addEventListener("click", (e) => {
-      if (!num2) {
-        operator = e.target.textContent;
-      } else {
-        const result = calculateCurrentOperation();
-        if (result === null) {
-          return;
-        }
-        operator = e.target.textContent;
-        displayResult(result);
-      }
-    });
-  });
-}
-setUpOperatorButtons();
-
+//
+// function setUpOperatorButtons() {
+//   operatorButtons.forEach((operatorButton) => {
+//     operatorButton.addEventListener("click", (e) => {
+//       if (!num2) {
+//         operator = e.target.textContent;
+//       } else {
+//         const result = calculateCurrentOperation();
+//         if (result === null) {
+//           return;
+//         }
+//         operator = e.target.textContent;
+//         displayResult(result);
+//       }
+//     });
+//   });
+// }
+// setUpOperatorButtons();
+//
 const equalsButton = document.querySelector(".equals");
 
-function setUpEqualsButton() {
-  equalsButton.addEventListener("click", () => {
-    if (!num2) {
-      return;
-    }
-    const result = calculateCurrentOperation();
-    if (result === null) {
-      return;
-    }
-    displayResult(result);
-    operator = "";
-    calculationProcessed = true;
-  });
-}
-setUpEqualsButton();
+// function setUpEqualsButton() {
+//   equalsButton.addEventListener("click", () => {
+//     if (!num2) {
+//       return;
+//     }
+//     const result = calculateCurrentOperation();
+//     if (result === null) {
+//       return;
+//     }
+//     displayResult(result);
+//     operator = "";
+//     calculationProcessed = true;
+//   });
+// }
+// setUpEqualsButton();
 setUpACButton();
 
 function calculateCurrentOperation() {
@@ -158,56 +158,176 @@ function displayResult(value) {
 
 const decimalBtn = document.querySelector(".decimal");
 
-function setUpDecimalButton() {
-  decimalBtn.addEventListener("click", (e) => {
-    if (!operator) {
-      if (calculationProcessed) {
-        calculationProcessed = false;
-        num1 = "";
-      }
-      if (num1.includes(".")) {
-        return;
-      }
-      if (!num1) {
-        num1 += "0";
-      }
-      num1 += e.target.textContent;
-      displayOnScreen(num1);
-    } else {
-      if (num2.includes(".")) {
-        return;
-      }
-      if (!num2) {
-        num2 += "0";
-      }
-      num2 += e.target.textContent;
-      displayOnScreen(num2);
-    }
-  });
-}
-setUpDecimalButton();
-
+// function setUpDecimalButton() {
+//   decimalBtn.addEventListener("click", (e) => {
+//     if (!operator) {
+//       if (calculationProcessed) {
+//         calculationProcessed = false;
+//         num1 = "";
+//       }
+//       if (num1.includes(".")) {
+//         return;
+//       }
+//       if (!num1) {
+//         num1 += "0";
+//       }
+//       num1 += e.target.textContent;
+//       displayOnScreen(num1);
+//     } else {
+//       if (num2.includes(".")) {
+//         return;
+//       }
+//       if (!num2) {
+//         num2 += "0";
+//       }
+//       num2 += e.target.textContent;
+//       displayOnScreen(num2);
+//     }
+//   });
+// }
+// setUpDecimalButton();
+//
 const backspaceBtn = document.querySelector(".backspace");
 
-function setUpBackspaceButton() {
-  backspaceBtn.addEventListener("click", () => {
+// function setUpBackspaceButton() {
+//   backspaceBtn.addEventListener("click", () => {
+//     if (operator) {
+//       if (!num2) {
+//         return;
+//       }
+//
+//       num2 = num2.slice(0, -1);
+//       displayOnScreen(num2);
+//       return;
+//     }
+//     if (calculationProcessed) {
+//       return;
+//     }
+//
+//     if (!num1) {
+//       return;
+//     }
+//     num1 = num1.slice(0, -1);
+//     displayOnScreen(num1);
+//   });
+// }
+// setUpBackspaceButton();
+
+function useDigits(digit) {
+  if (!operator) {
     if (calculationProcessed) {
+      calculationProcessed = false;
+      num1 = digit;
+    } else {
+      num1 += digit;
+    }
+    displayOnScreen(num1);
+  } else {
+    num2 += digit;
+    displayOnScreen(num2);
+  }
+}
+
+function getDigitButton() {
+  digitButtons.forEach((digitBtn) => {
+    digitBtn.addEventListener("click", () => useDigits(digitBtn.textContent));
+  });
+}
+getDigitButton();
+
+function useOperator(operatorBtn) {
+  if (!num2) {
+    operator = operatorBtn;
+  } else {
+    const result = calculateCurrentOperation();
+    if (result === null) {
       return;
     }
-    if (operator) {
-      if (!num2) {
-        return;
-      }
+    operator = operatorBtn;
+    displayResult(result);
+  }
+}
 
-      num2 = num2.slice(0, -1);
-      displayOnScreen(num2);
+function getOperator() {
+  operatorButtons.forEach((operatorButton) => {
+    operatorButton.addEventListener("click", () =>
+      useOperator(operatorButton.textContent),
+    );
+  });
+}
+getOperator();
+
+function useDecimal() {
+  if (!operator) {
+    if (calculationProcessed) {
+      calculationProcessed = false;
+      num1 = "";
+    }
+    if (num1.includes(".")) {
       return;
     }
     if (!num1) {
+      num1 += "0";
+    }
+    num1 += ".";
+    displayOnScreen(num1);
+  } else {
+    if (num2.includes(".")) {
       return;
     }
-    num1 = num1.slice(0, -1);
-    displayOnScreen(num1);
-  });
+    if (!num2) {
+      num2 += "0";
+    }
+    num2 += ".";
+    displayOnScreen(num2);
+  }
 }
-setUpBackspaceButton();
+
+function getDecimal() {
+  decimalBtn.addEventListener("click", useDecimal);
+}
+getDecimal();
+
+function useEquals() {
+  if (!num2) {
+    return;
+  }
+  const result = calculateCurrentOperation();
+  if (result === null) {
+    return;
+  }
+  displayResult(result);
+  operator = "";
+  calculationProcessed = true;
+}
+
+function getEquals() {
+  equalsButton.addEventListener("click", useEquals);
+}
+getEquals();
+
+function useBackspace() {
+  if (operator) {
+    if (!num2) {
+      return;
+    }
+
+    num2 = num2.slice(0, -1);
+    displayOnScreen(num2);
+    return;
+  }
+  if (calculationProcessed) {
+    return;
+  }
+
+  if (!num1) {
+    return;
+  }
+  num1 = num1.slice(0, -1);
+  displayOnScreen(num1);
+}
+
+function getBackspace() {
+  backspaceBtn.addEventListener("click", useBackspace);
+}
+getBackspace();
