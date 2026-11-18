@@ -221,3 +221,13 @@ function getBackspace() {
   backspaceBtn.addEventListener("click", useBackspace);
 }
 getBackspace();
+
+function useKeyboardDigits() {
+  const allowedDigits = "0123456789";
+  document.addEventListener("keydown", (e) => {
+    if (allowedDigits.includes(e.key)) {
+      useDigits(e.key);
+    }
+  });
+}
+useKeyboardDigits();
